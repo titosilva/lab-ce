@@ -42,26 +42,35 @@ class Complex:
 def pol(mod: float, deg: float):
     return Complex(cmath.rect(mod, deg * pi / 180))
 
-# Resistência da fonte
-Rin = 50
-# Resistor
-R = 560
-# Indutor
-L = 10 ** (-3)
-# Capacitor
-C = 100 * 10 ** (-9)
+if __name__ == "__main__":
+    # Resistência da fonte
+    Rin = 50
+    # Resistor
+    R = 560
+    # Indutor
+    L = 10 ** (-3)
+    # Capacitor
+    C = 100 * 10 ** (-9)
 
-w = lambda f : 2 * pi * f
+    w = lambda f : 2 * pi * f
 
-Zrin = Rin
-Zr = R
-Zl = lambda f : 1j * w(f) * L
-Zc = lambda f : 1 / (1j * w(f) * C)
+    Zrin = Rin
+    Zr = R
+    Zl = lambda f : 1j * w(f) * L
+    Zc = lambda f : 1 / (1j * w(f) * C)
 
-V = pol(1, 0)
-I = lambda f : V / (Zrin + Zr + Zl(f) + Zc(f))
+    # Fonte
+    V = pol(1, 0)
+    I = lambda f : V / (Zrin + Zr + Zl(f) + Zc(f))
 
-Vrin = lambda f : I(f) * Zrin
-Vr = lambda f : I(f) * Zr
-Vl = lambda f : I(f) * Zl(f)
-Vc = lambda f : I(f) * Zc(f)
+    # Tensões
+    Vrin = lambda f : I(f) * Zrin
+    Vr = lambda f : I(f) * Zr
+    Vl = lambda f : I(f) * Zl(f)
+    Vc = lambda f : I(f) * Zc(f)
+
+    f = float(input("Qual a frequência da fonte?\n"))
+
+    print(f"Vc = {Vc(f)}")
+    print(f"Vl = {Vl(f)}")
+    print(f"Vr = {Vr(f)}")
